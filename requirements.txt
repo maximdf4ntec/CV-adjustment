@@ -1,0 +1,16 @@
+# general
+beautifulsoup4
+subprocess
+requests
+pathlib
+docx
+docx.enum.text
+pydantic
+
+# langgraph
+langchain
+langchain-core
+langchain-google-genai
+langgraph.graph
+langchain_core.prompts
+trafilatura

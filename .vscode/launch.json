@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File with Arguments and Env Vars",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--cv",
+                "./input/test1.docx",
+                "--lnkd_id",
+                "4268344534ט",
+                "--model",
+                "gemini-2.5-flash"
+            ],
+            "env": {
+                "GEMINI_API_KEY": "AIzaSyA6iAh-xbFxld-E7eYYfNJJP3WzgluX9sc",
+                "ENV_MODE": "Development",
+                "LOG_LEVEL": "DEBUG"
+            }
+        }
+    ]
+}
