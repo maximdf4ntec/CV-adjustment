@@ -13,7 +13,7 @@
                 "--lnkd_id",
                 "4268344534ט",
                 "--model",
-                "gemini-2.5-flash"
+                "gemini/gemini-2.5-flash"
             ],
             "env": {
                 "GEMINI_API_KEY": "AIzaSyA6iAh-xbFxld-E7eYYfNJJP3WzgluX9sc",

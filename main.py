@@ -169,15 +169,17 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--jd_url", help="URL to the job description")
     group.add_argument("--lnkd_id", help="Job description LinkedIn ID")
+    group.add_argument("--jd_file", help="Path to a local job description file")
     parser.add_argument(
         "--model", default="gpt-4o", help="OpenAI model name (e.g., gpt-4o, gpt-4.1)"
     )
     parser.add_argument("--out_dir", default="./output", help="Output directory")
+    parser.add_argument(
+        "--auto_answer",
+        action="store_true",
+        help="Automatically answer all questions with a generic response (for testing).",
+    )
     args = parser.parse_args()
-    if not os.getenv("GEMINI_API_KEY"):
-        print("ERROR: Please set GEMINI_API_KEY.", file=sys.stderr)
-        sys.exit(1)
-
     cv_text = normalize_text(read_text_from_file(args.cv))
     if args.jd_url:
         jd_text = normalize_text(fetch_job_description_from_url(args.jd_url))
@@ -189,6 +191,9 @@ def main():
             )
         )
         meta = {"jd_source": "linkedin", "lnkd_id": args.lnkd_id}
+    elif args.jd_file:
+        jd_text = normalize_text(read_text_from_file(args.jd_file))
+        meta = {"jd_source": "file", "jd_file": args.jd_file}
 
     initial_state = PipelineState(
         cv_text=cv_text, jd_text=jd_text, lnkd_id=args.lnkd_id, meta=meta
@@ -203,7 +208,11 @@ def main():
     if questions_state.questions_response.generated_questions:
         for question in questions_state.questions_response.generated_questions:
             print(f"Q: {question}")
-            answer = input("A: ")
+            if args.auto_answer:
+                answer = "Not applicable, please use best judgment based on my CV."
+                print(f"A (auto): {answer}")
+            else:
+                answer = input("A: ")
             answers_from_user[question] = (
                 answer if answer.strip().lower() != "no" else None
             )

@@ -4,12 +4,15 @@ import json
 from typing import Dict, Any, Optional
 
 # LangChain / LangGraph
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 
 
 def make_llm(model: str, temperature: float = 0.7):
-    return ChatGoogleGenerativeAI(
-        model=model, temperature=temperature, google_api_key=os.getenv("GEMINI_API_KEY")
+    return ChatOpenAI(
+        model=model,
+        base_url="https://ro-aaea614c7e4a437e97464a09b40e2adc.ecs.us-east-1.on.aws/v1/",
+        api_key="router-client",
+        temperature=temperature,
     )
 
 
